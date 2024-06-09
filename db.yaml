@@ -1,4 +1,4 @@
-- name: Configure DBServer
+- name: Configure DB Server
   hosts: db
   become: yes
   vars:
@@ -25,8 +25,8 @@
       - PyMySQL
       - cryptography
       executable: pip3.9 # pip3.11 if python version is 3.11      
-
-  # check password is already setup or not
+    
+    # check password is already setup or not
 
   - name: Check DB Connection
     community.mysql.mysql_info:
