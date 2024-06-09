@@ -2,7 +2,7 @@
   hosts: db
   become: yes
   vars:
-    local_host: db.daws24.online
+    login_host: db.daws24.online
   vars_prompt:
   - name: mysql_root_password
     prompt: Please enter MySQL root password
@@ -11,28 +11,28 @@
   - name: Install MySQL Server
     ansible.builtin.dnf:
       name: mysql-server
-      state: latest
+      state: latest  
+
+  - name: Start and Enable MySQL server
+    ansible.builtin.service:
+      name: mysqld
+      state: started
+      enabled: yes
 
   - name: install python mysql dependencies
     ansible.builtin.pip:
       name: 
       - PyMySQL
       - cryptography
-      executable: pip3.9 # pip3.11 if python version is 3.11    
-
-  - name: Start and Enable MySQL Server
-    ansible.builtin.service:
-      name: mysqld
-      state: started
-      enabled: yes
+      executable: pip3.9 # pip3.11 if python version is 3.11      
 
   # check password is already setup or not
 
   - name: Check DB Connection
-    community.mysql.mysql_db:
+    community.mysql.mysql_info:
       local_user: root
       local_password: "{{ mysql_root_password }}"
-      local_host: "{{ local_host }}"
+      local_host: "{{ login_host }}"
       filter: version
     ignore_errors: yes
     register: mysql_connection_output
