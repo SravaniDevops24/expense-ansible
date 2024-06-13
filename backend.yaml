@@ -65,7 +65,7 @@
       target: /app/schema/backend.sql
       state: import
       name: all
-      ignore_errors: yes
+    ignore_errors: yes
 
 
 
