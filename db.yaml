@@ -3,10 +3,10 @@
   become: yes
   vars:
     login_host: db.daws24.online
-  vars_prompt:
-  - name: mysql_root_password
-    prompt: please enter MySQL root password
-    private: no
+  # vars_prompt:
+  # - name: mysql_root_password
+  #   prompt: please enter MySQL root password
+  #   private: no
   tasks:
   - name: Install MySQL Server
     ansible.builtin.dnf:
@@ -29,7 +29,7 @@
   - name: checking db connection
     community.mysql.mysql_info:
       login_user: root
-      login_password: "{{ mysql_root_password }}"
+      login_password: "ExpenseApp@1"
       login_host: "{{ login_host }}"
       filter: version
     ignore_errors: yes
@@ -40,5 +40,5 @@
       msg: "output: {{ mysql_connection_output }}"
   
   - name: setup root password
-    ansible.builtin.command: "mysql_secure_installation --set-root-pass {{ mysql_root_password }}"
+    ansible.builtin.command: "mysql_secure_installation --set-root-pass ExpenseApp@1"
     when: mysql_connection_output.failed is true # don't give this braces {{ }} in when condition and also use small true for boolean 
