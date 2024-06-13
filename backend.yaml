@@ -2,6 +2,8 @@
   hosts: backend
   become: yes
   vars:
+    login_host: db.daws24.online
+    login_password: ExpenseApp@1
 
   tasks:
   - name: disable default node js
@@ -44,4 +46,23 @@
     ansible.builtin.copy:
       src: backend.service
       dest: /etc/systemd/system/backend.service
+
+  - name: install Python mysql dependencies
+    ansible.builtin.pip:
+      name:
+      - PyMySQL # to connect MySQL DB from ansible 
+      - cryptography
+      executable: pip3.9  # pip3.11 used if python version is 3.11
+
+  - name: import data into mysql
+    community.mysql.mysql_db:
+      login_user: root
+      login_password: "{{ login_password }}"
+      login_host: "{{ login_host }}"
+      target: /app/schema/backend.sql
+      state: dump
+      name: all
+
+
+
 
