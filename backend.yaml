@@ -1,12 +1,12 @@
 - name: configure backend server
-  hosts: backend
   become: yes
+  hosts: backend
   vars:
     login_host: db.daws24.online
     login_password: ExpenseApp@1
 
   tasks:
-  - name: disable default node js
+  - name: disable default nodejs
     ansible.builtin.command: dnf module disable nodejs -y
 
   - name: enable nodejs:20
