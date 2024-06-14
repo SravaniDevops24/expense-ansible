@@ -56,7 +56,7 @@
       - PyMySQL # to connect MySQL DB from ansible 
       - cryptography
       executable: pip3.9  # pip3.11 used if python version is 3.11
-  ignore_errors: yes   
+    ignore_errors: yes   
 
 
   - name: import data into mysql
